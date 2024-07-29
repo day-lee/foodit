@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import getResponse from "../api";
 import FoodList from "./FoodList.js";
+import ReviewForm from "./ReviewForm.js";
 
 function App() {
   const [data, setData] = useState([]);
@@ -58,36 +59,30 @@ function App() {
 
   const loadMoreHandle = () => {
     console.log("loadmore " + cursor);
-    loadHandle({ order, cursor });
+    loadHandle({ order, cursor, search });
   };
 
-  const searchClickHandle = (e) => {
+  const submitHandle = (e) => {
     e.preventDefault();
-    loadHandle({ search });
-    setSearch("");
+    setSearch(e.target["search"].value);
   };
 
-  const searchChangeHandle = (e) => {
-    const search = e.target.value;
-    setSearch(search);
-    console.log(search);
-  };
+  // const searchChangeHandle = (e) => {
+  //   const search = e.target.value;
+  //   setSearch(search);
+  //   console.log(search);
+  // };
 
   return (
     <>
       <button onClick={recentOrderHandle}> By Recently posted </button>
       <button onClick={calorieOrderHandle}> By Calorie </button>
-      <div>
+      <form onSubmit={submitHandle}>
         <label htmlFor="search"></label>
-        <input
-          type="text"
-          id="search"
-          name="search"
-          onChange={searchChangeHandle}
-          value={search}
-        ></input>
-        <button onClick={searchClickHandle}>Search</button>
-      </div>
+        <input type="text" id="search" name="search" />
+        <button type="submit">Search</button>
+      </form>
+      <ReviewForm />
       <FoodList data={data} />
       <button disabled={loading} onClick={loadMoreHandle}>
         Load More
