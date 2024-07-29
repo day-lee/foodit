@@ -1,7 +1,13 @@
 import { useState } from "react";
+import FileInput from "./FileInput";
 
 function ReviewForm() {
-  const [values, setValues] = useState({ title: "", calorie: 0, content: "" });
+  const [values, setValues] = useState({
+    title: "",
+    calorie: 0,
+    content: "",
+    imgUrl: null,
+  });
 
   const checkNumber = (type, value) => {
     switch (type) {
@@ -13,8 +19,12 @@ function ReviewForm() {
   };
 
   // Utlising the 'name' and 'value' attributes of the input tag
-  const changeHandle = (e) => {
+  const changeInputHandle = (e) => {
     const { type, name, value } = e.target;
+    handleChange(name, type, value);
+  };
+
+  const handleChange = (name, type, value) => {
     // functional update
     setValues((prev) => ({ ...prev, [name]: checkNumber(type, value) }));
   };
@@ -31,20 +41,21 @@ function ReviewForm() {
         type="text"
         name="title"
         value={values.title}
-        onChange={changeHandle}
+        onChange={changeInputHandle}
       />
       <input
         type="number"
         name="calorie"
         value={values.calorie}
-        onChange={changeHandle}
+        onChange={changeInputHandle}
       />
       <input
         type="text"
         name="content"
         value={values.content}
-        onChange={changeHandle}
+        onChange={changeInputHandle}
       />
+      <FileInput name="imgUrl" value={values.imgUrl} onChange={handleChange} />
       <button type="submit">Submit</button>
     </form>
   );
