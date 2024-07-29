@@ -1,0 +1,12 @@
+.FoodList {
+  list-style: none;
+  padding: 100px;
+}
+
+.FoodListItem {
+  margin: 10px;
+}
+
+.FoodListItem img {
+  width: 200px;
+}
